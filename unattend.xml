@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <unattend xmlns="urn:schemas-microsoft-com:unattend" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
 
+	<settings pass="windowsPE">
+		<component name="Microsoft-Windows-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+			<RunSynchronous>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>1</Order>
+					<Path>reg.exe add "HKLM\SYSTEM\Setup\LabConfig" /v BypassTPMCheck /t REG_DWORD /d 1 /f</Path>
+					<Description>Bypass TPM 2.0 Check</Description>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>2</Order>
+					<Path>reg.exe add "HKLM\SYSTEM\Setup\LabConfig" /v BypassSecureBootCheck /t REG_DWORD /d 1 /f</Path>
+					<Description>Bypass Secure Boot Check</Description>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>3</Order>
+					<Path>reg.exe add "HKLM\SYSTEM\Setup\LabConfig" /v BypassRAMCheck /t REG_DWORD /d 1 /f</Path>
+					<Description>Bypass RAM Check</Description>
+				</RunSynchronousCommand>
+			</RunSynchronous>
+		</component>
+	</settings>
+
 	<settings pass="specialize">
 		<component name="Microsoft-Windows-Deployment" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
 			<RunSynchronous>
@@ -48,20 +70,32 @@
 
 				<RunSynchronousCommand wcm:action="add">
 					<Order>8</Order>
+					<Path>reg.exe load "HKU\DefaultUser" "C:\Users\Default\NTUSER.DAT"</Path>
+					<Description>Load Default User hive for editing</Description>
+				</RunSynchronousCommand>
+
+				<RunSynchronousCommand wcm:action="add">
+					<Order>9</Order>
 					<Path>reg.exe add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "HideFileExt" /t REG_DWORD /d 0 /f</Path>
 					<Description>Show file extensions for new users by default</Description>
 				</RunSynchronousCommand>
 
 				<RunSynchronousCommand wcm:action="add">
-					<Order>9</Order>
+					<Order>10</Order>
 					<Path>reg.exe add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "Hidden" /t REG_DWORD /d 1 /f</Path>
 					<Description>Show hidden files for new users by default</Description>
 				</RunSynchronousCommand>
-				
+
 				<RunSynchronousCommand wcm:action="add">
-					<Order>10</Order>
+					<Order>11</Order>
 					<Path>reg.exe add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings" /v TaskbarEndTask /t REG_DWORD /d 1 /f</Path>
 					<Description>Enable 'End Task' context menu on taskbar for new users</Description>
+				</RunSynchronousCommand>
+
+				<RunSynchronousCommand wcm:action="add">
+					<Order>12</Order>
+					<Path>reg.exe unload "HKU\DefaultUser"</Path>
+					<Description>Unload Default User hive to save changes</Description>
 				</RunSynchronousCommand>
 			</RunSynchronous>
 		</component>
