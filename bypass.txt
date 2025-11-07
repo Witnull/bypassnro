@@ -4,13 +4,28 @@ set /p USERNAME="Enter your desired username: "
 :password_input
 powershell -Command "$pass1 = Read-Host 'Enter password' -AsSecureString; $pass2 = Read-Host 'Confirm password' -AsSecureString; $p1 = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($pass1)); $p2 = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($pass2)); if ($p1 -eq $p2) { $p1 } else { exit 1 }" > %temp%\pass.txt
 if errorlevel 1 (
-    echo Passwords do not match. Please try again.
-    goto password_input
+    echo Passwords do not match. Please try again.
+    goto password_input
 )
 
 set /p PASSWORD=<%temp%\pass.txt
 del %temp%\pass.txt
 
+:: It checks if the PASSWORD variable is empty.
+:: If it is, it changes the Windows security policy to allow blank passwords.
+if "%PASSWORD%"=="" (
+    echo.
+    echo WARNING: You are using a blank password.
+    echo Modifying security policy to allow blank password logon...
+    echo.
+    reg.exe add "HKLM\SYSTEM\CurrentControlSet\Control\Lsa" /v LimitBlankPasswordUse /t REG_DWORD /d 0 /f
+)
+
+echo Downloading unattend.xml file...
 curl -L -o C:\Windows\Panther\unattend.xml https://raw.githubusercontent.com/Witnull/bypassnro/refs/heads/main/unattend.xml
+
+echo Injecting credentials...
 powershell -Command "$xml = [xml](Get-Content C:\Windows\Panther\unattend.xml); $ns = New-Object System.Xml.XmlNamespaceManager($xml.NameTable); $ns.AddNamespace('u', 'urn:schemas-microsoft-com:unattend'); $ns.AddNamespace('wcm', 'http://schemas.microsoft.com/WMIConfig/2002/State'); $account = $xml.SelectSingleNode('//u:LocalAccount', $ns); $account.Name = '%USERNAME%'; $account.Password.Value = '%PASSWORD%'; $xml.Save('C:\Windows\Panther\unattend.xml')"
+
+echo Starting Sysprep...
 %WINDIR%\System32\Sysprep\Sysprep.exe /oobe /unattend:C:\Windows\Panther\unattend.xml /reboot
