@@ -165,10 +165,10 @@
 				<LocalAccounts>
 					<!-- This block will be filled in by your batch script -->
 					<LocalAccount wcm:action="add">
-						<Name>TempUser</Name>
+						<Name>Admin</Name>
 						<Group>Administrators</Group>
 						<Password>
-							<Value>TempPassword</Value>
+							<Value>pass/Value>
 							<PlainText>true</PlainText>
 						</Password>
 					</LocalAccount>
