@@ -1,5 +1,12 @@
 # Witnull's Bypass NRO
 
+## [!WARNING]
+###⚠️ Use at Your Own Risk!
+This set of scripts and configurations makes deep changes to the Windows operating system. It is intended for personal use only on non-critical machines.
+
+###⛔ NOT FOR CORPORATE OR COMPANY USE
+Do not use this in a business or enterprise environment. Many settings (like allowing blank passwords and disabling security checks) create significant security vulnerabilities and will violate company IT policies.
+
 > **Note:** This method skips the Windows Microsoft account requirement without debloating Windows. All Windows features and functionality remain intact.
 
 > **Note2:** Default password: pass
