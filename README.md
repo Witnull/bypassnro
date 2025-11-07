@@ -1,7 +1,9 @@
 # Witnull's Bypass NRO
 
 > **Note:** This method skips the Windows Microsoft account requirement without debloating Windows. All Windows features and functionality remain intact.
+
 > **Note2:** Default password: pass
+
 From the OOBE Screen press Shift + F10
 
 ```
