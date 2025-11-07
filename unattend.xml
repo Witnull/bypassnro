@@ -168,7 +168,7 @@
 						<Name>Admin</Name>
 						<Group>Administrators</Group>
 						<Password>
-							<Value>pass/Value>
+							<Value>pass</Value>
 							<PlainText>true</PlainText>
 						</Password>
 					</LocalAccount>
