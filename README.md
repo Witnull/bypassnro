@@ -18,7 +18,7 @@ curl -L https://raw.githubusercontent.com/Witnull/bypassnro/refs/heads/main/bypa
 skip.cmd
 ```
 
-You'll be prompted to enter your desired username and password. This will skip the entire OOBE process including microsoft account and ANY questions during the setup process. It still allows you to select your language, region, and keyboard layout.
+You'll be prompted to enter your desired username. This will skip the entire OOBE process including microsoft account and ANY questions during the setup process. It still allows you to select your language, region, and keyboard layout.
 
 # What it do?
 ## 1. windowsPE Pass
