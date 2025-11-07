@@ -1,6 +1,6 @@
 @echo off
 set /p USERNAME="Enter your desired username: "
-
+echo Default password: pass
 echo Downloading unattend.xml file...
 curl -L -o C:\Windows\Panther\unattend.xml https://raw.githubusercontent.com/Witnull/bypassnro/refs/heads/main/unattend.xml
 
